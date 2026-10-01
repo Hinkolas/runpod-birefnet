@@ -1,0 +1,50 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Hinkolas/skali/main/schemas/skali.schema.json
+
+name: birefnet-demo
+description: Background removal demo UI that drives the BiRefNet RunPod worker inline
+
+# Stateless: images travel to RunPod inline and the results live in the browser
+# tab, so the app needs no database or bucket and any replica can serve any request.
+applications:
+  web:
+    build:
+      context: .
+
+    environment:
+      RUNPOD_API_KEY: '${RUNPOD_API_KEY}'
+      RUNPOD_ENDPOINT_ID: '${RUNPOD_ENDPOINT_ID}'
+      APP_ID: '${APP_ID:-demo-ui}'
+      RUNPOD_TIMEOUT_MS: '${RUNPOD_TIMEOUT_MS:-300000}'
+      # adapter-node otherwise derives the URL from the plain-HTTP hop behind the edge.
+      ORIGIN: 'https://${APP_DOMAIN}'
+
+    ports:
+      http:
+        port: 3000
+
+    routes:
+      public:
+        domain: '${APP_DOMAIN}'
+        port: http
+
+    health:
+      readiness:
+        http:
+          port: http
+          path: /healthz
+      liveness:
+        http:
+          port: http
+          path: /healthz
+
+    # A 10 MiB image is held in memory a few times over (raw, base64, results).
+    resources:
+      requests:
+        cpu: 0.1
+        memory: 192MB
+      limits:
+        cpu: 1
+        memory: 768MB
+
+    dev:
+      command: [bun, run, dev, --, --port, '${PORT}', --host]

@@ -64,6 +64,7 @@ uses the built-in `GITHUB_TOKEN` (no secrets to configure) and builds `linux/amd
 
 See [`example/README.md`](example/README.md) to run the SvelteKit demo (drop an image, pick a model, compare
 and download the cutout and mask). It sends images inline via `/runsync`, so it needs no public URL and no database.
+It ships a [`skali.yaml`](example/skali.yaml) for deploying it with [skali](https://github.com/Hinkolas/skali).
 
 ## Measuring latency
 

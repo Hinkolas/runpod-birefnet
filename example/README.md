@@ -57,6 +57,28 @@ docker run --rm -p 3000:3000 \
   birefnet-demo
 ```
 
+## Deploy with skali
+
+[`skali.yaml`](skali.yaml) deploys the same Dockerfile to [skali](https://github.com/Hinkolas/skali). The app is
+stateless, so it declares no database or bucket; `/healthz` backs the readiness and liveness probes. Supply the
+values per environment (in a `.env` here, or stored with the first deploy):
+
+| Value                | Required | Purpose                                                      |
+| -------------------- | -------- | ------------------------------------------------------------ |
+| `APP_DOMAIN`         | yes      | The route's domain, e.g. `birefnet.localhost` for local dev. |
+| `RUNPOD_API_KEY`     | yes      | As above.                                                    |
+| `RUNPOD_ENDPOINT_ID` | yes      | As above.                                                    |
+| `APP_ID`             | optional | As above (default `demo-ui`).                                |
+| `RUNPOD_TIMEOUT_MS`  | optional | As above (default 300000).                                   |
+
+```sh
+skali dev            # local cluster; runs `bun run dev` on this machine behind https://$APP_DOMAIN
+skali dev --preview  # local cluster, built from the Dockerfile exactly like a remote deploy
+skali deploy         # deploy to the current remote
+```
+
+`ORIGIN` is derived from `APP_DOMAIN` (`https://…`), since the app sits behind skali's TLS-terminating edge.
+
 ## Notes & limitations (it's a demo)
 
 - Images are capped at 10 MiB: base64 inflates them by ~4/3 and RunPod caps a `/runsync` request at 20 MB.
