@@ -1,0 +1,14 @@
+{
+  "input": {
+    "source": {
+      "type": "http",
+      "url": "https://huggingface.co/datasets/Xenova/transformers.js-docs/resolve/main/tiger.jpg"
+    },
+    "model": "general",
+    "outputs": [
+      { "kind": "mask", "format": "png" },
+      { "kind": "cutout", "format": "webp", "quality": 90 }
+    ],
+    "metadata": { "test": true }
+  }
+}
