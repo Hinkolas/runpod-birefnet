@@ -1,0 +1,7 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<title>Background Remover</title>
+	<rect width="256" height="256" rx="60" fill="#7C3AED" />
+	<rect x="58" y="58" width="140" height="140" rx="22" stroke="#FFFFFF" stroke-width="16" stroke-dasharray="26 18" />
+	<circle cx="128" cy="112" r="24" fill="#FFFFFF" />
+	<path d="M84 176c4-26 22-40 44-40s40 14 44 40z" fill="#FFFFFF" />
+</svg>

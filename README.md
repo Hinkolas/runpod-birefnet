@@ -9,6 +9,7 @@ the results are written to** (inline base64, S3, or any HTTP endpoint).
 | Path | What it is |
 |------|------------|
 | [`worker/`](worker) | The RunPod serverless worker (Python + PyTorch). The thing you deploy. |
+| [`example/`](example) | A SvelteKit demo UI that drives the worker inline (drop an image → compare the cutout → download). |
 | [`bench/`](bench) | An end-to-end latency benchmark for a deployed endpoint (cold start, queueing, inference, transport). |
 
 ## Deploy the worker
@@ -58,6 +59,11 @@ git push origin v0.1.0
 
 This produces `ghcr.io/hinkolas/runpod-birefnet-worker` tagged `0.1.0`, `0.1`, and `latest`. The workflow
 uses the built-in `GITHUB_TOKEN` (no secrets to configure) and builds `linux/amd64` (RunPod's worker arch).
+
+## Demo UI
+
+See [`example/README.md`](example/README.md) to run the SvelteKit demo (drop an image, pick a model, compare
+and download the cutout and mask). It sends images inline via `/runsync`, so it needs no public URL and no database.
 
 ## Measuring latency
 
